@@ -1,0 +1,7 @@
+# Arquivos gerados pelo Python (não precisam ir para o Git/zip)
+__pycache__/
+*.pyc
+
+# Ambiente virtual
+.venv/
+venv/

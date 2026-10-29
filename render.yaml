@@ -1,0 +1,14 @@
+# Configuração para publicar o site no Render (https://render.com).
+# O Render lê este arquivo e sabe como instalar e ligar o site.
+services:
+  - type: web
+    name: entreframes
+    runtime: python
+    plan: free
+    # Instala o Flask/gunicorn e baixa os pôsteres da Wikipédia
+    buildCommand: pip install -r requirements.txt && python baixar_posteres.py
+    # Liga o site. "app:app" = arquivo app.py, variável app
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7

@@ -1,0 +1,4 @@
+flask==3.1.*
+# gunicorn: servidor usado para rodar o site na internet (Render).
+# No seu computador continue usando "python app.py".
+gunicorn==23.*
