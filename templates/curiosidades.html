@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block titulo %}Curiosidades · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="destaque destaque--curto">
+  <p class="destaque__sobretitulo">Curiosidades</p>
+  <h1 class="destaque__titulo">Você <span>sabia?</span></h1>
+  <p class="destaque__texto">Bastidores e fatos curiosos dos filmes do nosso catálogo.</p>
+</section>
+
+<ul class="curiosidades">
+  {% for filme in filmes %}
+  <li class="curiosidade">
+    <a class="curiosidade__filme" href="{{ url_for('filme', slug=filme.slug) }}">
+      {% if filme.poster %}
+        <img src="{{ filme.poster }}" alt="" loading="lazy" width="60" height="90">
+      {% endif %}
+      <span>
+        <b>{{ filme.titulo }}</b>
+        <small>{{ filme.ano }} · {{ filme.marca_nome }}</small>
+      </span>
+    </a>
+    <ul class="curiosidade__fatos">
+      {% for fato in filme.curiosidades %}<li>{{ fato }}</li>{% endfor %}
+    </ul>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

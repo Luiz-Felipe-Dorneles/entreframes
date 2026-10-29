@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block titulo %}Página não encontrada · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="vazio vazio--404">
+  <p class="vazio__codigo">404</p>
+  <h1>Essa sessão não está em cartaz</h1>
+  <p>O filme ou a página que você procurou não existe.</p>
+  <a class="botao" href="{{ url_for('catalogo') }}">Voltar ao catálogo</a>
+</section>
+{% endblock %}

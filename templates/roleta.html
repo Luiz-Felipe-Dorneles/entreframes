@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block titulo %}Roleta: o que assistir? · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="destaque destaque--curto">
+  <p class="destaque__sobretitulo">Roleta</p>
+  <h1 class="destaque__titulo">O que assistir <span>hoje?</span></h1>
+  <p class="destaque__texto">Escolha um gênero e/ou uma marca (ou deixe tudo em branco) e gire a roleta.</p>
+</section>
+
+{# Formulário GET: os filtros vão para a URL e o Python sorteia o filme #}
+<form class="roleta__form" action="{{ url_for('roleta') }}" method="get">
+  <label>
+    <span>Gênero</span>
+    <select name="genero">
+      <option value="">Qualquer gênero</option>
+      {% for g in generos %}<option value="{{ g }}" {% if g == genero %}selected{% endif %}>{{ g }}</option>{% endfor %}
+    </select>
+  </label>
+  <label>
+    <span>Marca</span>
+    <select name="marca">
+      <option value="">Qualquer marca</option>
+      {% for chave, nome in marcas.items() %}<option value="{{ chave }}" {% if chave == marca %}selected{% endif %}>{{ nome }}</option>{% endfor %}
+    </select>
+  </label>
+  <button class="botao" type="submit" name="girar" value="1">🎰 Girar a roleta</button>
+</form>
+
+{% if sorteado %}
+<section class="roleta" aria-live="polite">
+  {# A "janela" mostra um pôster por vez. O carretel desliza para cima
+     (animação CSS) e para no último pôster, que é o sorteado. #}
+  <div class="roleta__janela" aria-hidden="true">
+    <div class="roleta__carretel" style="--quantos: {{ carretel|length }}">
+      {% for f in carretel %}
+        {% if f.poster %}<img src="{{ f.poster }}" alt="" width="200" height="300">
+        {% else %}<span class="cartao__sem-poster">{{ f.titulo }}</span>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="roleta__resultado">
+    <p class="destaque__sobretitulo">A roleta escolheu</p>
+    <h2 class="roleta__titulo">{{ sorteado.titulo }}</h2>
+    <p class="cartao__meta">{{ sorteado.ano }} · {{ sorteado.diretor }} · {{ sorteado.generos|join(", ") }}</p>
+    <p>{{ sorteado.sinopse }}</p>
+    <div class="info__botoes">
+      <a class="botao" href="{{ url_for('filme', slug=sorteado.slug) }}">Ver em 3D</a>
+      {# Leva direto para este filme no menu "Onde assistir" (âncora #slug) #}
+      <a class="botao botao--imdb" href="{{ url_for('onde_assistir') }}#{{ sorteado.slug }}">Onde assistir</a>
+      <a class="botao botao--contorno" href="{{ url_for('roleta', genero=genero or None, marca=marca or None, girar=1) }}">Girar de novo</a>
+    </div>
+  </div>
+</section>
+{% elif nenhum %}
+<div class="vazio">
+  <p>Nenhum filme do catálogo combina com esse gênero e essa marca juntos. Tente outra combinação!</p>
+</div>
+{% endif %}
+{% endblock %}

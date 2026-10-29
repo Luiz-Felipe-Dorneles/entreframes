@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block titulo %}Notícias de cinema · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="destaque destaque--curto">
+  <p class="destaque__sobretitulo">Notícias</p>
+  <h1 class="destaque__titulo">O que está <span>rolando</span> no cinema</h1>
+  <p class="destaque__texto">
+    Manchetes reais de sites brasileiros de cinema, reunidas pelo Google Notícias (RSS)
+    {% if atualizado_em %}e atualizadas em {{ atualizado_em }}{% endif %}.
+  </p>
+</section>
+
+{% if noticias %}
+  <ul class="noticias">
+    {% for noticia in noticias %}
+    <li class="noticia">
+      {# O link abre o site da notícia numa aba nova #}
+      <a href="{{ noticia.link }}" target="_blank" rel="noopener">
+        <span class="noticia__fonte">{{ noticia.fonte or "Notícia" }}</span>
+        <span class="noticia__titulo">{{ noticia.titulo }}</span>
+        <span class="noticia__data">{{ noticia.data }} · ler no site ↗</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+{% elif carregando %}
+  <div class="vazio">
+    <p><span class="spinner"></span></p>
+    <p>Buscando as últimas notícias… atualize a página em alguns segundos.</p>
+    <a class="botao" href="{{ url_for('pagina_noticias') }}">Atualizar</a>
+  </div>
+{% else %}
+  <div class="vazio">
+    <p>Não foi possível carregar as notícias agora. Verifique a conexão com a internet.</p>
+    <a class="botao" href="{{ url_for('pagina_noticias') }}">Tentar de novo</a>
+  </div>
+{% endif %}
+{% endblock %}

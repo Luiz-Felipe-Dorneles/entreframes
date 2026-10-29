@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block titulo %}Créditos dos modelos 3D · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="destaque destaque--curto">
+  <p class="destaque__sobretitulo">Créditos</p>
+  <h1 class="destaque__titulo">Modelos <span>3D</span> usados no portal</h1>
+  <p class="destaque__texto">
+    Todos os modelos são exibidos pelo visualizador oficial do Sketchfab (embed) e pertencem aos seus autores.
+    As licenças Creative Commons (CC BY) exigem dar crédito ao autor — por isso esta página existe.
+  </p>
+</section>
+
+<div class="tabela-rolagem">
+  <table class="tabela">
+    <thead>
+      <tr><th>Filme</th><th>Modelo 3D</th><th>Autor</th><th>Licença</th><th>Link</th></tr>
+    </thead>
+    <tbody>
+      {% for filme in filmes %}
+      <tr>
+        <td><a href="{{ url_for('filme', slug=filme.slug) }}">{{ filme.titulo }}</a></td>
+        <td>{{ filme.modelo.nome }}</td>
+        <td>{{ filme.modelo.autor }}</td>
+        <td>
+          {# Link para o texto da licença (exigido pelas licenças Creative Commons) #}
+          {% if filme.licenca_link %}<a href="{{ filme.licenca_link }}" target="_blank" rel="noopener">{{ filme.modelo.licenca }}</a>{% else %}{{ filme.modelo.licenca }}{% endif %}
+        </td>
+        <td><a href="{{ filme.modelo_pagina }}" target="_blank" rel="noopener">Sketchfab ↗</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="observacao">
+  Pôsteres: Wikipédia (uso educacional). Notas: conjunto de dados oficial do IMDb
+  (<a href="https://datasets.imdbws.com/" target="_blank" rel="noopener">datasets.imdbws.com</a>), atualizado diariamente.
+  Marcas e personagens pertencem aos seus respectivos donos.
+</p>
+{% endblock %}

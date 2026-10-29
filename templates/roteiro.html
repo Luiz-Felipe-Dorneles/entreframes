@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block titulo %}Roteiro da apresentação · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="destaque destaque--curto">
+  <p class="destaque__sobretitulo">Modo aula</p>
+  <h1 class="destaque__titulo">Roteiro da <span>apresentação</span></h1>
+  <p class="destaque__texto">
+    {{ etapas|length }} etapas, apresentadas por {{ integrantes|join(", ") }}.
+    Cada pessoa abre a etapa na lousa e fala o texto abaixo (não precisa decorar: use como guia).
+    Tempo sugerido: cerca de 1 minuto por etapa, uns 12 a 15 minutos no total.
+  </p>
+  <p><a class="botao" href="{{ url_for('modo_aula') }}">Abrir a lousa</a></p>
+</section>
+
+<ol class="roteiro">
+  {% for etapa in etapas %}
+  <li class="roteiro__etapa" id="etapa-{{ loop.index }}">
+    <p class="roteiro__quem">Etapa {{ loop.index }} · <b>{{ etapa.quem }}</b></p>
+    <h2>{{ etapa.titulo }}</h2>
+    <p class="roteiro__fala">“{{ etapa.fala }}”</p>
+    <p class="roteiro__dica">
+      <a href="{{ url_for('modo_aula', numero=loop.index) }}">Lousa {{ loop.index }}</a>
+      {% if etapa.mostrar %} · Mostrar no site: <a href="{{ etapa.mostrar }}" target="_blank" rel="noopener">{{ etapa.mostrar }}</a>{% endif %}
+    </p>
+  </li>
+  {% endfor %}
+</ol>
+{% endblock %}

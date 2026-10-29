@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ filme.titulo }} ({{ filme.ano }}) · EntreFrames{% endblock %}
+{% block classe_body %}pagina-filme{% endblock %}
+
+{% block descricao %}
+  <meta name="description" content="{{ filme.sinopse }}">
+  {# Tags "Open Graph": mostram título, texto e pôster quando o link é compartilhado #}
+  <meta property="og:title" content="{{ filme.titulo }} ({{ filme.ano }}) · EntreFrames">
+  <meta property="og:description" content="{{ filme.sinopse }}">
+  {% if filme.poster %}<meta property="og:image" content="{{ request.host_url.rstrip('/') }}{{ filme.poster }}">{% endif %}
+{% endblock %}
+
+{% block conteudo %}
+<article class="filme" {% if filme.poster %}style="--poster: url('{{ filme.poster }}')"{% endif %}>
+  <nav class="migalha" aria-label="Você está em">
+    <a href="{{ url_for('catalogo') }}">← Voltar ao catálogo</a>
+  </nav>
+
+  <section class="palco" aria-label="Modelo 3D interativo">
+    <div class="visualizador">
+      <p class="visualizador__carregando" aria-hidden="true">
+        <span class="spinner"></span> Carregando modelo 3D…
+      </p>
+      <iframe
+        title="Modelo 3D: {{ filme.modelo.nome }}"
+        src="{{ filme.modelo_embed }}"
+        allow="autoplay; fullscreen; xr-spatial-tracking"
+        loading="eager"></iframe>
+    </div>
+    <ul class="dicas" aria-label="Como usar o modelo 3D">
+      <li><b>Girar:</b> arraste com o mouse ou um dedo</li>
+      <li><b>Zoom:</b> rodinha do mouse ou pinça</li>
+      <li><b>Mover:</b> botão direito ou dois dedos</li>
+      <li><b>Focar:</b> clique duas vezes num ponto</li>
+    </ul>
+  </section>
+
+  <aside class="info">
+    <div class="info__cabecalho">
+      {% if filme.poster %}
+        <img class="info__poster" src="{{ filme.poster }}" alt="Pôster de {{ filme.titulo }}" width="120" height="180">
+      {% endif %}
+      <div>
+        <span class="marca marca--{{ filme.marca }} marca--estatica">{{ filme.marca_nome }}</span>
+        <h1 class="info__titulo">{{ filme.titulo }}</h1>
+        <p class="info__original">{{ filme.original }} · {{ filme.ano }}</p>
+      </div>
+    </div>
+
+    <div class="info__nota">
+      {% if filme.nota %}
+        <span class="info__nota-valor"><span aria-hidden="true">★</span> {{ "%.1f"|format(filme.nota) }}<small>/10</small></span>
+        <span class="info__nota-texto">Nota no IMDb<br>{{ filme.votos }} votos</span>
+      {% elif notas_carregando %}
+        <span class="info__nota-texto">Nota do IMDb carregando — atualize a página em alguns segundos.</span>
+      {% else %}
+        <span class="info__nota-texto">Nota do IMDb indisponível no momento.</span>
+      {% endif %}
+    </div>
+
+    <dl class="info__dados">
+      <div><dt>Direção</dt><dd>{{ filme.diretor }}</dd></div>
+      <div><dt>Duração</dt><dd>{{ filme.duracao }}</dd></div>
+      <div><dt>Estúdio</dt><dd>{{ filme.marca_nome }}</dd></div>
+    </dl>
+
+    <ul class="generos" aria-label="Gêneros">
+      {% for genero in filme.generos %}<li>{{ genero }}</li>{% endfor %}
+    </ul>
+
+    <p class="info__sinopse">{{ filme.sinopse }}</p>
+
+    <details class="info__curiosidades">
+      <summary>Você sabia?</summary>
+      <ul>{% for fato in filme.curiosidades %}<li>{{ fato }}</li>{% endfor %}</ul>
+    </details>
+
+    <div class="info__botoes">
+      <a class="botao botao--imdb" href="{{ filme.link_imdb }}" target="_blank" rel="noopener">Ver no IMDb</a>
+      <a class="botao botao--contorno" href="{{ filme.modelo_pagina }}" target="_blank" rel="noopener">Abrir no Sketchfab</a>
+      <a class="botao botao--contorno" href="{{ url_for('onde_assistir') }}#{{ filme.slug }}">Onde assistir</a>
+    </div>
+
+    <p class="info__credito">
+      Modelo 3D <cite>“{{ filme.modelo.nome }}”</cite> por <b>{{ filme.modelo.autor }}</b>,
+      no Sketchfab · Licença:
+      {% if filme.licenca_link %}<a href="{{ filme.licenca_link }}" target="_blank" rel="noopener">{{ filme.modelo.licenca }}</a>{% else %}{{ filme.modelo.licenca }}{% endif %}.
+    </p>
+  </aside>
+
+  <nav class="vizinhos" aria-label="Outros filmes">
+    <a href="{{ url_for('filme', slug=anterior.slug) }}"><small>← Anterior</small>{{ anterior.titulo }}</a>
+    <a href="{{ url_for('filme', slug=proximo.slug) }}"><small>Próximo →</small>{{ proximo.titulo }}</a>
+  </nav>
+</article>
+{% endblock %}

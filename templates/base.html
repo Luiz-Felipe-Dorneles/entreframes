@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}EntreFrames{% endblock %}</title>
+  {# Cada página pode trocar a descrição (usada pelo Google e pela prévia do link no WhatsApp) #}
+  {% block descricao %}
+  <meta name="description" content="Portal de filmes famosos com notas do IMDb e modelos 3D interativos.">
+  {% endblock %}
+  <meta name="theme-color" content="#0b0a10">
+  <link rel="icon" href="{{ url_for('static', filename='img/icone.svg') }}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="{% block classe_body %}{% endblock %}">
+  {% block antes_da_pagina %}{% endblock %}
+
+  <div class="pagina">
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="topo">
+      <a class="logo" href="{{ url_for('catalogo') }}" aria-label="EntreFrames — catálogo">
+        <span class="logo__icone" aria-hidden="true"></span>
+        <span>Entre<b>Frames</b></span>
+      </a>
+      {# Itens do menu: (nome da função da rota no app.py, texto do link) #}
+      {% set menu = [
+        ('catalogo', 'Catálogo'),
+        ('pagina_noticias', 'Notícias'),
+        ('curiosidades', 'Curiosidades'),
+        ('linha_do_tempo', 'Linha do tempo'),
+        ('roleta', 'Roleta'),
+        ('onde_assistir', 'Onde assistir'),
+        ('creditos', 'Créditos 3D'),
+      ] %}
+      <nav class="topo__menu" aria-label="Principal">
+        {% for rota, texto in menu %}
+          <a href="{{ url_for(rota) }}"
+             {% if request.endpoint == rota or (rota == 'catalogo' and request.endpoint == 'inicio') %}aria-current="page"{% endif %}>{{ texto }}</a>
+        {% endfor %}
+      </nav>
+
+      {# Botão do Modo Aula: abre a lousa verde com a explicação do código #}
+      <a class="botao-aula" href="{{ url_for('modo_aula') }}">
+        <span aria-hidden="true">✎</span> Modo aula
+      </a>
+    </header>
+
+    <main id="conteudo">
+      {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer class="rodape">
+      <p>EntreFrames · {{ ano_atual }} · A2 Desenvolvimento Front-end para Web</p>
+      <p>
+        Notas: <a href="https://datasets.imdbws.com/" target="_blank" rel="noopener">IMDb Datasets</a>
+        {% if notas_atualizadas_em %}(atualizadas em {{ notas_atualizadas_em }}){% endif %}
+        · Modelos 3D: <a href="{{ url_for('creditos') }}">Sketchfab</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %}Linha do tempo · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="destaque destaque--curto">
+  <p class="destaque__sobretitulo">Linha do tempo</p>
+  <h1 class="destaque__titulo">Quase 50 anos de <span>cinema</span></h1>
+  <p class="destaque__texto">Os filmes do catálogo em ordem de lançamento, década por década.</p>
+</section>
+
+<div class="linha">
+  {# decadas é um dicionário: {1970: [filmes], 1980: [filmes], ...} #}
+  {% for decada, filmes in decadas.items() %}
+  <section class="linha__decada" aria-labelledby="decada-{{ decada }}">
+    <h2 class="linha__rotulo" id="decada-{{ decada }}">Anos {{ decada % 100 if decada < 2000 else decada }}</h2>
+    <ol class="linha__filmes">
+      {% for filme in filmes %}
+      <li class="linha__item">
+        <span class="linha__ano">{{ filme.ano }}</span>
+        <a class="linha__cartao" href="{{ url_for('filme', slug=filme.slug) }}">
+          {% if filme.poster %}
+            <img src="{{ filme.poster }}" alt="" loading="lazy" width="54" height="81">
+          {% endif %}
+          <span>
+            <b>{{ filme.titulo }}</b>
+            <small>{{ filme.diretor }} · {{ filme.marca_nome }}</small>
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

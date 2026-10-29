@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block titulo %}EntreFrames · Catálogo de filmes{% endblock %}
+
+{% block antes_da_pagina %}
+{% if mostrar_intro %}
+  {#
+    INTRO (só HTML + CSS, sem JavaScript):
+    - as animações começam pausadas (animation-play-state: paused);
+    - o <label> cobre a tela inteira: clicar/tocar nele marca o checkbox,
+      e o seletor :checked coloca tudo em "running";
+    - no fim, a intro some (visibility: hidden) e libera o catálogo.
+  #}
+  <input type="checkbox" id="entrar" class="intro-gatilho" aria-label="Entrar no portal">
+  <label for="entrar" class="intro anima">
+    <span class="intro__feixe anima" aria-hidden="true"></span>
+    <span class="intro__tela anima">
+      <span class="intro__conteudo anima">
+        <span class="intro__selo">Sessão especial</span>
+        <span class="intro__titulo">Entre<b>Frames</b></span>
+        <span class="intro__dica intro__dica--mouse">Clique na tela para entrar</span>
+        <span class="intro__dica intro__dica--toque">Toque na tela para entrar</span>
+      </span>
+    </span>
+    <span class="intro__bambinela anima" aria-hidden="true"></span>
+    <span class="intro__cortina intro__cortina--esq anima" aria-hidden="true"></span>
+    <span class="intro__cortina intro__cortina--dir anima" aria-hidden="true"></span>
+    <span class="intro__poltronas anima" aria-hidden="true"></span>
+  </label>
+{% endif %}
+{% endblock %}
+
+{% block conteudo %}
+<section class="destaque">
+  <p class="destaque__sobretitulo">Em cartaz</p>
+  <h1 class="destaque__titulo">Os filmes mais <span>famosos</span>, em 3D</h1>
+  <p class="destaque__texto">
+    Escolha um filme para ver o pôster, a nota do IMDb e explorar um modelo 3D interativo:
+    gire, aproxime e veja cada detalhe.
+  </p>
+</section>
+
+<section class="filtros" aria-label="Filtrar filmes">
+  <form class="busca" action="{{ url_for('catalogo') }}" method="get" role="search">
+    {% if marca %}<input type="hidden" name="marca" value="{{ marca }}">{% endif %}
+    <label class="busca__campo">
+      <span class="sr-only">Buscar filme</span>
+      <input type="search" name="q" value="{{ busca }}" placeholder="Buscar por título, diretor ou marca…" autocomplete="off">
+    </label>
+    <label class="busca__ordem">
+      <span class="sr-only">Ordenar por</span>
+      <select name="ordem">
+        {% for chave, rotulo in ordens.items() %}
+          <option value="{{ chave }}" {% if chave == ordem %}selected{% endif %}>{{ rotulo }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button class="botao" type="submit">Buscar</button>
+  </form>
+
+  <nav class="marcas" aria-label="Filtrar por marca">
+    <a class="chip {% if not marca %}chip--ativo{% endif %}"
+       href="{{ url_for('catalogo', q=busca or None, ordem=ordem) }}">Todas</a>
+    {% for chave, nome in marcas.items() %}
+      <a class="chip chip--{{ chave }} {% if marca == chave %}chip--ativo{% endif %}"
+         href="{{ url_for('catalogo', marca=chave, q=busca or None, ordem=ordem) }}">{{ nome }}</a>
+    {% endfor %}
+  </nav>
+</section>
+
+<section aria-labelledby="titulo-catalogo">
+  <h2 id="titulo-catalogo" class="secao-titulo">
+    Catálogo <small>{{ filmes|length }} de {{ total }} filmes</small>
+  </h2>
+
+  {% if filmes %}
+  <ul class="grade">
+    {% for filme in filmes %}
+    <li class="grade__item" style="--i: {{ loop.index0 }}">
+      <a class="cartao" href="{{ url_for('filme', slug=filme.slug) }}">
+        <div class="cartao__capa">
+          {% if filme.poster %}
+            <img src="{{ filme.poster }}" alt="Pôster de {{ filme.titulo }}" loading="lazy" width="300" height="450">
+          {% else %}
+            <span class="cartao__sem-poster">{{ filme.titulo }}</span>
+          {% endif %}
+          <span class="marca marca--{{ filme.marca }}">{{ filme.marca_nome }}</span>
+          <span class="cartao__ver3d" aria-hidden="true">Ver em 3D</span>
+        </div>
+        <div class="cartao__info">
+          <h3 class="cartao__titulo">{{ filme.titulo }}</h3>
+          <p class="cartao__meta">{{ filme.ano }} · {{ filme.diretor }}</p>
+          {% if filme.nota %}
+            <p class="nota" title="{{ filme.votos }} votos no IMDb">
+              <span class="nota__estrela" aria-hidden="true">★</span>
+              <strong>{{ "%.1f"|format(filme.nota) }}</strong><span class="nota__max">/10</span>
+              <span class="nota__fonte">IMDb</span>
+            </p>
+          {% elif notas_carregando %}
+            <p class="nota nota--carregando">Nota do IMDb carregando…</p>
+          {% else %}
+            <p class="nota nota--carregando">Nota indisponível</p>
+          {% endif %}
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="vazio">
+    <p>Nenhum filme encontrado para “{{ busca }}”.</p>
+    <a class="botao" href="{{ url_for('catalogo') }}">Ver todos os filmes</a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

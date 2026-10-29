@@ -1,0 +1,82 @@
+<!doctype html>
+{# Modo Aula: página própria (sem o topo do site) que imita uma lousa verde.
+   Cada etapa é um endereço: /aula/1, /aula/2, ... e o conteúdo vem do aula.py. #}
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modo aula {{ numero }}/{{ total }} · EntreFrames</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/icone.svg') }}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {# Nunito: fonte arredondada e fácil de ler de longe, no projetor #}
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="modo-aula">
+  <div class="lousa">
+    <header class="lousa__topo">
+      <span class="lousa__etapa">Etapa {{ numero }} de {{ total }} · apresenta: <b>{{ etapa.quem }}</b></span>
+      <span class="lousa__acoes">
+        <a href="{{ url_for('roteiro') }}#etapa-{{ numero }}" target="_blank" rel="noopener">Roteiro ↗</a>
+        <a href="{{ url_for('catalogo') }}">✕ Sair da lousa</a>
+      </span>
+    </header>
+
+    <main class="lousa__conteudo">
+      <h1 class="lousa__titulo">{{ etapa.titulo }}</h1>
+
+      <div class="lousa__colunas">
+        <ul class="lousa__pontos">
+          {% for ponto in etapa.pontos %}<li>{{ ponto }}</li>{% endfor %}
+        </ul>
+
+        <figure class="lousa__codigo">
+          <figcaption>{{ etapa.arquivo }}</figcaption>
+          {# o filtro "comentarios" (app.py) pinta os comentários de outra cor #}
+          <pre><code>{{ etapa.codigo|comentarios }}</code></pre>
+        </figure>
+      </div>
+
+      {# Só a etapa das cores mostra as amostras #}
+      {% if etapa.cores %}
+      <ul class="lousa__cores">
+        {% for cor in cores %}
+        <li>
+          <span class="lousa__amostra" style="background: {{ cor.hex }}"></span>
+          <b>{{ cor.nome }}</b> <code>{{ cor.hex }}</code>
+          <small>{{ cor.motivo }}</small>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if etapa.mostrar %}
+        <a class="lousa__mostrar" href="{{ etapa.mostrar }}" target="_blank" rel="noopener">
+          Mostrar no site: {{ etapa.mostrar }} ↗
+        </a>
+      {% endif %}
+    </main>
+
+    <nav class="lousa__navegacao" aria-label="Etapas da aula">
+      {% if numero > 1 %}
+        <a class="lousa__seta" href="{{ url_for('modo_aula', numero=numero - 1) }}" accesskey="a">← Anterior</a>
+      {% else %}<span class="lousa__seta lousa__seta--off">← Anterior</span>{% endif %}
+
+      {# Bolinhas: uma por etapa, com a inicial de quem apresenta #}
+      <ol class="lousa__bolinhas">
+        {% for e in etapas %}
+        <li>
+          <a href="{{ url_for('modo_aula', numero=loop.index) }}" title="{{ loop.index }}. {{ e.titulo }} ({{ e.quem }})"
+             {% if loop.index == numero %}aria-current="step"{% endif %}>{{ e.quem[0] }}</a>
+        </li>
+        {% endfor %}
+      </ol>
+
+      {% if numero < total %}
+        <a class="lousa__seta" href="{{ url_for('modo_aula', numero=numero + 1) }}" accesskey="p">Próximo →</a>
+      {% else %}<span class="lousa__seta lousa__seta--off">Fim 🎬</span>{% endif %}
+    </nav>
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block titulo %}Onde assistir · EntreFrames{% endblock %}
+
+{% block conteudo %}
+<section class="destaque destaque--curto">
+  <p class="destaque__sobretitulo">Onde assistir</p>
+  <h1 class="destaque__titulo">Onde ver cada filme <span>em casa</span></h1>
+  <p class="destaque__texto">
+    Indicamos o streaming do <b>dono do filme</b> (quando ele tem uma plataforma no Brasil),
+    as lojas para alugar ou comprar e o JustWatch, que mostra onde o filme está hoje.
+    Os catálogos mudam com frequência, então confira antes de assinar algo.
+  </p>
+</section>
+
+<ul class="onde">
+  {% for filme in filmes %}
+  {# id="slug": permite abrir a página já no filme, ex.: /onde-assistir#shrek #}
+  <li class="onde__filme" id="{{ filme.slug }}">
+    <a class="onde__cabecalho" href="{{ url_for('filme', slug=filme.slug) }}">
+      {% if filme.poster %}
+        <img src="{{ filme.poster }}" alt="" loading="lazy" width="60" height="90">
+      {% endif %}
+      <span>
+        <b>{{ filme.titulo }}</b>
+        <small>{{ filme.ano }} · {{ filme.marca_nome }}</small>
+      </span>
+    </a>
+
+    <div class="onde__bloco">
+      <h2>Streaming por assinatura</h2>
+      {% if filme.plataforma %}
+        <a class="plataforma plataforma--{{ filme.streaming }}" href="{{ filme.plataforma.url }}" target="_blank" rel="noopener">
+          {{ filme.plataforma.nome }} ↗
+        </a>
+      {% else %}
+        <p class="onde__sem">Varia: veja no JustWatch abaixo.</p>
+      {% endif %}
+      <p class="onde__motivo">{{ filme.streaming_motivo }}</p>
+    </div>
+
+    <div class="onde__bloco">
+      <h2>Alugar ou comprar</h2>
+      <p class="onde__lojas">
+        {% for nome, link in filme.lojas %}
+          <a href="{{ link }}" target="_blank" rel="noopener">{{ nome }} ↗</a>
+        {% endfor %}
+      </p>
+    </div>
+
+    <a class="botao botao--contorno onde__justwatch" href="{{ filme.justwatch }}" target="_blank" rel="noopener">
+      Onde está hoje? Ver no JustWatch ↗
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
