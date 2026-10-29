@@ -25,7 +25,7 @@ depois, a partir de buscas no Sketchfab: abra cada link uma vez para conferir.
 | 11 | Harry Potter e a Pedra Filosofal (2001) | Hogwarts Grand Hall | zack_graham | CC BY 4.0 | 26 mil | [abrir](https://sketchfab.com/3d-models/hogwarts-grand-hall-203784d1e8704cfba3af8a2b224b74ff) |
 | 12 | Transformers (2007) | Bumblebee - Optimus Prime Transform Animation | DIO | CC BY 4.0 | 65 mil (animado) | [abrir](https://sketchfab.com/3d-models/bumblebee-optimus-prime-transform-animation-35f9cb09b1b248c7bd6b12912ac8cd3a) |
 | 13 | Shrek (2001) | Shrek | burnt.melon | CC BY 4.0 | 2 mil | [abrir](https://sketchfab.com/3d-models/shrek-ff6a111c58c94d328b0880a38b912428) |
-| 14 | Tubarão (1975) | Bruce the Great White Shark from JAWS 1975 | AllThingsSaurus | CC BY 4.0 | 12 mil | [abrir](https://sketchfab.com/3d-models/bruce-the-great-white-shark-from-jaws-1975-fbcbc3a96dab42d6a1c1a50c4913c6aa) |
+| 14 | Tubarão (1975) | JAWS - Bruce (baseado no modelo de "digital life") | UniverseXP | CC BY 4.0 | 424 mil | [abrir](https://sketchfab.com/3d-models/jaws-bruce-88a3c8d9968540d48b01580230a750c4) |
 | 15 | Os Caçadores da Arca Perdida (1981) | Indiana Jones Hat | AlexTheBaBa | CC BY 4.0 | 5,5 mil | [abrir](https://sketchfab.com/3d-models/indiana-jones-hat-96cd3caac3f44d2583a91175541dd093) |
 | 16 | Os Caça-Fantasmas (1984) | Ecto-1 | kukusa0909 | CC BY 4.0 | 80 mil | [abrir](https://sketchfab.com/3d-models/ecto-1-cbd3cf6ca77b40a783ab182c8e3ccdcd) |
 | 17 | O Rei Leão (1994) | Simba (Lion King) | KillerBear | CC BY 4.0 | — | [abrir](https://sketchfab.com/3d-models/simba-lion-king-e6786e860dca4ed588bebfea8d9f3790) |

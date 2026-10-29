@@ -398,9 +398,9 @@ FILMES = [
         "streaming_motivo": "A Universal não tem streaming próprio no Brasil, então o filme muda de plataforma de tempos em tempos.",
         "wiki": ("en", "Jaws_(film)"),
         "modelo": {
-            "uid": "fbcbc3a96dab42d6a1c1a50c4913c6aa",
-            "nome": "Bruce the Great White Shark from JAWS 1975",
-            "autor": "AllThingsSaurus",
+            "uid": "88a3c8d9968540d48b01580230a750c4",
+            "nome": "JAWS - Bruce",
+            "autor": "UniverseXP",
             "licenca": "CC BY 4.0",
         },
     },
