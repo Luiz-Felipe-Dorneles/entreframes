@@ -1,6 +1,6 @@
 # Roteiro da apresentação: EntreFrames
 
-Integrantes: Cauã, Vitor, Ryan, Mateus. São 12 etapas, 3 por pessoa, cerca de 1 minuto cada (12 a 15 minutos no total).
+Integrantes: Cauã, João, Ryan, Mateus. São 12 etapas, 3 por pessoa, cerca de 1 minuto cada (12 a 15 minutos no total).
 
 ## Antes de começar
 
@@ -18,7 +18,7 @@ Integrantes: Cauã, Vitor, Ryan, Mateus. São 12 etapas, 3 por pessoa, cerca de 
 
 *Mostrar no site:* `/catalogo`
 
-> Boa tarde! Nós somos o Cauã, o Vitor, o Ryan e o Mateus, e vamos apresentar o EntreFrames, um portal de filmes famosos. Em cada filme dá para ver a nota do IMDb e explorar um modelo 3D. O site foi feito com Python, usando o Flask, mais HTML e CSS. Uma escolha nossa foi não escrever JavaScript: tudo o que é interativo, como busca, filtros e a roleta, funciona com formulários que o Python processa. Cada endereço do site, como /catalogo, é ligado a uma função Python, como vocês veem na lousa.
+> Boa tarde! Nós somos o Cauã, o João, o Ryan e o Mateus, e vamos apresentar o EntreFrames, um portal de filmes famosos. Em cada filme dá para ver a nota do IMDb e explorar um modelo 3D. O site foi feito com Python, usando o Flask, mais HTML e CSS. Uma escolha nossa foi não escrever JavaScript: tudo o que é interativo, como busca, filtros e a roleta, funciona com formulários que o Python processa. Cada endereço do site, como /catalogo, é ligado a uma função Python, como vocês veem na lousa.
 
 ### Etapa 2: Identidade visual: nome, ícone e cores
 
@@ -28,9 +28,9 @@ Integrantes: Cauã, Vitor, Ryan, Mateus. São 12 etapas, 3 por pessoa, cerca de 
 
 *Mostrar no site:* `/`
 
-> Quando abrimos o site, aparece uma sala de cinema. Ao clicar, a tela amplia, as cortinas abrem e o catálogo aparece. Isso foi feito só com CSS. O truque é um checkbox escondido: a sala inteira é o label dele, então clicar em qualquer lugar marca o checkbox. Todas as animações começam pausadas, e o seletor :checked muda para running. Agora passo para o Vitor, que vai explicar como as páginas são montadas.
+> Quando abrimos o site, aparece uma sala de cinema. Ao clicar, a tela amplia, as cortinas abrem e o catálogo aparece. Isso foi feito só com CSS. O truque é um checkbox escondido: a sala inteira é o label dele, então clicar em qualquer lugar marca o checkbox. Todas as animações começam pausadas, e o seletor :checked muda para running. Agora passo para o João, que vai explicar como as páginas são montadas.
 
-## Vitor
+## João
 
 ### Etapa 4: Como o Flask monta uma página
 

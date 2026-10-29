@@ -13,7 +13,7 @@ Cada etapa tem:
 Para mudar a apresentação, é só editar esta lista.
 """
 
-INTEGRANTES = ["Cauã", "Vitor", "Ryan", "Mateus"]
+INTEGRANTES = ["Cauã", "João", "Ryan", "Mateus"]
 
 # Cores do site (as mesmas variáveis do style.css), explicadas na etapa 2
 CORES = [
@@ -50,7 +50,7 @@ def catalogo():
     return mostrar_catalogo(mostrar_intro=False)""",
         "arquivo": "app.py",
         "mostrar": "/catalogo",
-        "fala": "Boa tarde! Nós somos o Cauã, o Vitor, o Ryan e o Mateus, e vamos apresentar o "
+        "fala": "Boa tarde! Nós somos o Cauã, o João, o Ryan e o Mateus, e vamos apresentar o "
                 "EntreFrames, um portal de filmes famosos. Em cada filme dá para ver a nota do IMDb "
                 "e explorar um modelo 3D. O site foi feito com Python, usando o Flask, mais HTML e CSS. "
                 "Uma escolha nossa foi não escrever JavaScript: tudo o que é interativo, como busca, "
@@ -117,11 +117,11 @@ body { background: var(--fundo); }""",
                 "cortinas abrem e o catálogo aparece. Isso foi feito só com CSS. O truque é um checkbox "
                 "escondido: a sala inteira é o label dele, então clicar em qualquer lugar marca o checkbox. "
                 "Todas as animações começam pausadas, e o seletor :checked muda para running. "
-                "Agora passo para o Vitor, que vai explicar como as páginas são montadas.",
+                "Agora passo para o João, que vai explicar como as páginas são montadas.",
     },
-    # ------------------------------------------------------------ Vitor
+    # ------------------------------------------------------------ João
     {
-        "quem": "Vitor",
+        "quem": "João",
         "titulo": "Como o Flask monta uma página",
         "pontos": [
             "1. O navegador pede um endereço: /filme/shrek",
@@ -151,7 +151,7 @@ def filme(slug):
                 "com chaves duplas pelos dados do filme. O resultado é o HTML que chega no navegador.",
     },
     {
-        "quem": "Vitor",
+        "quem": "João",
         "titulo": "Onde ficam os dados dos filmes",
         "pontos": [
             "filmes.py: uma lista de dicionários, um por filme",
@@ -181,7 +181,7 @@ def filme(slug):
                 "como a nota do IMDb e os links do pôster e do modelo.",
     },
     {
-        "quem": "Vitor",
+        "quem": "João",
         "titulo": "Busca, filtro por marca e ordenação",
         "pontos": [
             "Os filtros vão na própria URL: /catalogo?q=batman&marca=dc&ordem=ano",
